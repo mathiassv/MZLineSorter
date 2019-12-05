@@ -15,19 +15,20 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MCLineSorter</RootNamespace>
     <ProjectName>MCLineSorting</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>false</UseOfMfc>
@@ -83,21 +84,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\MCUtils\MCDataReader.h" />
-    <ClInclude Include="..\..\..\Extensions\MCUtils\MCUtils\MCDataWriter.h" />
-    <ClInclude Include="..\..\..\Extensions\MCUtils\MCUtils\MCLineParser.h" />
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCLineCompare.h" />
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCLineInfo.h" />
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCLineSorter.h" />
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCLineSorterExceptions.h" />
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCParseTime.h" />
+    <ClInclude Include="..\..\MZDataReader\Source\MZDataIdentifier.h" />
+    <ClInclude Include="..\..\MZDataReader\Source\MZDataReader.h" />
+    <ClInclude Include="..\..\MZDataReader\Source\MZDataReaderException.h" />
+    <ClInclude Include="..\..\MZDataReader\Source\MZDataWriter.h" />
+    <ClInclude Include="..\..\MZDataReader\Source\MZLineParser.h" />
+    <ClInclude Include="..\..\MZDataReader\Source\MZLineReader.h" />
+    <ClInclude Include="..\..\MZDataReader\Source\MZLinesData.h" />
+    <ClInclude Include="..\Source\MZLineCompare.h" />
+    <ClInclude Include="..\Source\MZLineInfo.h" />
+    <ClInclude Include="..\Source\MZLineSorter.h" />
+    <ClInclude Include="..\Source\MZLineSorterExceptions.h" />
+    <ClInclude Include="..\Source\MZParseTime.h" />
+    <ClInclude Include="..\Source\MZSortableLinesData.h" />
+    <ClInclude Include="..\Source\MZSortingLinePreprocessor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Extensions\MCUtils\MCUtils\MCDataReader.cpp" />
-    <ClCompile Include="..\..\..\Extensions\MCUtils\SortLines\MCLineSorter.cpp" />
-    <ClCompile Include="..\..\..\Extensions\MCUtils\SortLines\MCParseTime.cpp" />
+    <ClCompile Include="..\Source\MZLineSorter.cpp" />
+    <ClCompile Include="..\Source\MZParseTime.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

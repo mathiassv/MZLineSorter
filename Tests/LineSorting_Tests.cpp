@@ -1,16 +1,17 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "../../../Extensions/MCUtils/MCUtils/MCDataReader.h"
-#include "../../../Extensions/MCUtils/MCUtils/MCLineParser.h"
-#include "../../../Extensions/MCUtils/MCUtils/MCLineReader.h"
-#include "../../../Extensions/MCUtils/SortLines/MCSortableLinesData.h"
-#include "../../../Extensions/MCUtils/SortLines/MCLineSorter.h"
+#include "../../MZDataReader/Source/MZDataReader.h"
+#include "../../MZDataReader/Source/MZLineParser.h"
+#include "../../MZDataReader/Source/MZLineReader.h"
 
-using namespace MCUtils;
+#include "../Source/MZSortableLinesData.h"
+#include "../Source/MZLineSorter.h"
+
+using namespace MZDR;
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+/*
 namespace Microsoft
 { 
     namespace VisualStudio
@@ -24,9 +25,9 @@ namespace Microsoft
         }
     }
 }
+*/
 
-
-namespace MCLineSorter
+namespace MZLineSorter
 {
   typedef LineReaderT<char, SortableLinesData> LineReaderA;
   typedef LineReaderT<wchar_t, SortableLinesData> LineReaderW;
@@ -144,10 +145,10 @@ namespace MCLineSorter
       return reader.ReadLinesFromDataReader(&memoryReader, &parser);
     }
 
-    MCLineSortingOptions GetDefaultOptions()
+    MZLineSortingOptions GetDefaultOptions()
     {
-      MCLineSortingOptions options;
-      ZeroMemory(&options, sizeof(MCLineSortingOptions));
+      MZLineSortingOptions options;
+      ZeroMemory(&options, sizeof(MZLineSortingOptions));
 
       return options;
     }
@@ -355,7 +356,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LinePreprocessorA_LineOffset)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.LineOffset = 2;
       
       auto pLines = GetLines("1 CCC\n2 AAA\n3 JJ\n4 DDD\n5 BB");
@@ -376,7 +377,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LinePreprocessorA_SkipWhitespace)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SkipLeadingSpaces;
       
       auto pLines = GetLines(" CCC\n  AAA\n JJ\n   DDD\n  BB");
@@ -397,7 +398,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LinePreprocessorA_SubStrWithEndAtSpace)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SubStr_EndAtWhitespace;
       options.LineOffset = 2;
 
@@ -419,7 +420,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LinePreprocessorW_SubStrWithEndAtSpace)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SubStr_EndAtWhitespace;
       options.LineOffset = 2;
 
@@ -441,7 +442,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LinePreprocessorA_SubEndCompareAtComma)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SubStr_EndAtChar;
       options.LineOffset = 2;
       options.charMatchA = ',';
@@ -464,7 +465,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LinePreprocessorA_LineItem)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByLineItem | Option_SkipLeadingSpaces;
       options.charMatchA = ',';
       options.LineItem = 4;
@@ -496,7 +497,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LinePreprocessorW_LineItem)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByLineItem | Option_SkipLeadingSpaces;
       options.charMatchA = ',';
       options.charMatchW = ',';
@@ -529,7 +530,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LinePreprocessorA_MatchDate)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SkipLeadingSpaces | Option_SortAsDate;
       options.LineOffset = 5;
       strcpy_s(options.szMatch, sizeof(options.szMatch), "%b %d %H:%M:%S %Y");
@@ -559,7 +560,7 @@ namespace MCLineSorter
     }
     TEST_METHOD(LinePreprocessorW_MatchDate)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SkipLeadingSpaces | Option_SortAsDate;
       options.LineOffset = 5;
       strcpy_s(options.szMatch, sizeof(options.szMatch), "%b %d %H:%M:%S %Y");
@@ -589,7 +590,7 @@ namespace MCLineSorter
     }
     TEST_METHOD(LinePreprocessorA_MatchDate_USDateFormat)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SkipLeadingSpaces | Option_SortAsDate;
       options.LineOffset = 5;
       strcpy_s(options.szMatch, sizeof(options.szMatch), "%d/%m/%Y %I:%M:%S %p");
@@ -618,9 +619,9 @@ namespace MCLineSorter
       Assert::AreEqual(expected4, vLines.at(3).nTime, L"Parsed time wrong");
     }
 
-      TEST_METHOD(LinePreprocessorA_MatchNum)
+    TEST_METHOD(LinePreprocessorA_MatchNum)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SkipLeadingSpaces | Option_SortAsNum;
       options.LineOffset = 5;
       strcpy_s(options.szMatch, sizeof(options.szMatch), "%d/%m/%Y %I:%M:%S %p");
@@ -646,7 +647,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_LangAware)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_LanguageAware;
 
       char szText [] = { "CBC\n" \
@@ -668,7 +669,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine;
 
       wchar_t szText [] = { L"BCD\n" \
@@ -697,7 +698,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_CRLF)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine;
 
       wchar_t szText [] = { L"BCD\r\n" \
@@ -726,7 +727,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_ErrorCase)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine;
 
       wchar_t szText [] = { L"   c,vxzn;oinm;ocijner8mdoir  \n" \
@@ -753,7 +754,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_ErrorCase)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine;
 
       char szText [] = { "   c,vxzn;oinm;ocijner8mdoir  \n" \
@@ -780,7 +781,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_ErrorCase_CRLF)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine;
 
       char szText [] = { "   c,vxzn;oinm;ocijner8mdoir  \r\n" \
@@ -807,7 +808,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_XP)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_ForceXPFallback;
 
       wchar_t szText [] = { L"CBC\n" \
@@ -829,7 +830,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_LangAware_Numbers)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_NaturalNumSorting | Option_LanguageAware;
 
       wchar_t szText [] = { L"050CBC\n" \
@@ -851,7 +852,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLineWithNumbers)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_NaturalNumSorting | Option_LanguageAware;
       
       char szText [] = { "050CBC\n" \
@@ -873,7 +874,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_IgnoreCase)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_IgnoreCase;
 
      wchar_t szText [] = { L"AdE\n" \
@@ -902,7 +903,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_IgnoreCase2)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_IgnoreCase;
 
       wchar_t szText [] = { L"BCD\n" \
@@ -930,7 +931,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_CaseSensitive_LangAware)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_LanguageAware;
 
      wchar_t szText [] = { L"AdE\n" \
@@ -959,7 +960,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine;
 
       char szText [] = { "BCD\n" \
@@ -988,7 +989,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_IgnoreCase)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_IgnoreCase;
 
       char szText [] = { "BCD\n" \
@@ -1017,7 +1018,7 @@ namespace MCLineSorter
     
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_LangAware)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_LanguageAware;
 
       wchar_t szText [] = { L"BCD\n" \
@@ -1046,7 +1047,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_LangAware_XP)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_LanguageAware | Option_ForceXPFallback;
 
       wchar_t szText [] = { L"BCD\n" \
@@ -1076,7 +1077,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_LangAware_SE)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_LanguageAware;
 
       AutoRevertLocale locale("sv-SE");
@@ -1128,7 +1129,7 @@ namespace MCLineSorter
     */
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_SkipLeadingSpaces)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_SkipLeadingSpaces;
 
       char szText [] = { " CBC\n" \
@@ -1150,7 +1151,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SubString_Fixed)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring;
       options.LineOffset = 5;
       options.SubStringLen = 3;
@@ -1174,7 +1175,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_SkipFirstLine)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring;
       options.LineOffset = 1;
       options.StartLine = 1;
@@ -1198,7 +1199,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_SkipLastLine)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring;
       options.LineOffset = 1;
       options.EndLine = 1;
@@ -1222,7 +1223,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_SkipFirstAndLastLine)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring;
       options.LineOffset = 1;
       options.StartLine = 1;
@@ -1251,7 +1252,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SortDescending)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_Reverse;
       
 
@@ -1274,7 +1275,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SubString_Fixed_SortAsNum)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring|Option_SortAsNum;
       options.LineOffset = 5;
       options.SubStringLen = 3;
@@ -1298,7 +1299,7 @@ namespace MCLineSorter
    
     TEST_METHOD(LineSortingW_MemBuffer_SubString_Fixed_SortAsNum)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring|Option_SortAsNum;
       options.LineOffset = 5;
       options.SubStringLen = 3;
@@ -1322,7 +1323,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SortAsNum_WithLeadingSpace)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring|Option_SortAsNum|Option_SkipLeadingSpaces;
       options.LineOffset = 4;
       options.SubStringLen = 3;
@@ -1346,7 +1347,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SortAsNum)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortAsNum;
       options.LineOffset = 5;
 
@@ -1369,7 +1370,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SortAsNum_Reverse)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortAsNum | Option_Reverse;
       options.LineOffset = 5;
 
@@ -1392,7 +1393,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_SortAsNum)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortAsNum;
       options.LineOffset = 5;
 
@@ -1415,7 +1416,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SortAsNum_Decending)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortAsNum | Option_Reverse;
       options.LineOffset = 5;
 
@@ -1440,7 +1441,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SortAsDate)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SkipLeadingSpaces | Option_SortAsDate;
       options.LineOffset = 5;
       strcpy_s(options.szMatch, sizeof(options.szMatch), "%b %d %H:%M:%S %Y");
@@ -1465,7 +1466,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_SortAsDate)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SkipLeadingSpaces | Option_SortAsDate;
       options.LineOffset = 5;
       strcpy_s(options.szMatch, sizeof(options.szMatch), "%b %d %H:%M:%S %Y");
@@ -1489,7 +1490,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_SortAsDate_Reverse)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortBySubstring | Option_SkipLeadingSpaces | Option_SortAsDate | Option_Reverse;
       options.LineOffset = 5;
       strcpy_s(options.szMatch, sizeof(options.szMatch), "%b %d %H:%M:%S %Y");
@@ -1513,7 +1514,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingA_MemBuffer_EntireLine_RemoveEmptyLines)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_RemoveBlank;
 
       char szText [] = { "BCD\n" \
@@ -1545,7 +1546,7 @@ namespace MCLineSorter
 
     TEST_METHOD(LineSortingW_MemBuffer_EntireLine_RemoveEmptyLines)
     {
-      MCLineSortingOptions options = GetDefaultOptions();
+      MZLineSortingOptions options = GetDefaultOptions();
       options.options = Option_SortByEntireLine | Option_RemoveBlank;
 
       wchar_t szText [] = { L"BCD\n" \

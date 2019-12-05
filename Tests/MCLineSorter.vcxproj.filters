@@ -16,8 +16,11 @@
     <Filter Include="SUT_MCLineSorter">
       <UniqueIdentifier>{5283c97e-722c-4118-8c3a-e5c1359d1ab1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SUT_MCLineSorter\MCUtils">
-      <UniqueIdentifier>{f62aa9b7-3944-4789-9a13-99a59dd4076a}</UniqueIdentifier>
+    <Filter Include="SUT_MCLineSorter\MZDataReader">
+      <UniqueIdentifier>{5247e99b-f069-4a35-a5dd-646ea7018499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SUT_MCLineSorter\MZLineSorter">
+      <UniqueIdentifier>{e0652e32-d10b-4f23-aa91-856ef1221679}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,46 +30,61 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCLineCompare.h">
-      <Filter>SUT_MCLineSorter</Filter>
+    <ClInclude Include="..\..\MZDataReader\Source\MZDataIdentifier.h">
+      <Filter>SUT_MCLineSorter\MZDataReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCLineInfo.h">
-      <Filter>SUT_MCLineSorter</Filter>
+    <ClInclude Include="..\..\MZDataReader\Source\MZDataReader.h">
+      <Filter>SUT_MCLineSorter\MZDataReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCLineSorter.h">
-      <Filter>SUT_MCLineSorter</Filter>
+    <ClInclude Include="..\..\MZDataReader\Source\MZDataReaderException.h">
+      <Filter>SUT_MCLineSorter\MZDataReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCLineSorterExceptions.h">
-      <Filter>SUT_MCLineSorter</Filter>
+    <ClInclude Include="..\..\MZDataReader\Source\MZDataWriter.h">
+      <Filter>SUT_MCLineSorter\MZDataReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\SortLines\MCParseTime.h">
-      <Filter>SUT_MCLineSorter</Filter>
+    <ClInclude Include="..\..\MZDataReader\Source\MZLineParser.h">
+      <Filter>SUT_MCLineSorter\MZDataReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\MCUtils\MCDataReader.h">
-      <Filter>SUT_MCLineSorter\MCUtils</Filter>
+    <ClInclude Include="..\..\MZDataReader\Source\MZLineReader.h">
+      <Filter>SUT_MCLineSorter\MZDataReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\MCUtils\MCLineParser.h">
-      <Filter>SUT_MCLineSorter\MCUtils</Filter>
+    <ClInclude Include="..\..\MZDataReader\Source\MZLinesData.h">
+      <Filter>SUT_MCLineSorter\MZDataReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Extensions\MCUtils\MCUtils\MCDataWriter.h">
-      <Filter>SUT_MCLineSorter\MCUtils</Filter>
+    <ClInclude Include="..\Source\MZLineCompare.h">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\MZLineInfo.h">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\MZLineSorter.h">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\MZLineSorterExceptions.h">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\MZParseTime.h">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\MZSortableLinesData.h">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\MZSortingLinePreprocessor.h">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Extensions\MCUtils\SortLines\MCLineSorter.cpp">
-      <Filter>SUT_MCLineSorter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Extensions\MCUtils\SortLines\MCParseTime.cpp">
-      <Filter>SUT_MCLineSorter</Filter>
-    </ClCompile>
     <ClCompile Include="LineSorting_Tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Extensions\MCUtils\MCUtils\MCDataReader.cpp">
-      <Filter>SUT_MCLineSorter\MCUtils</Filter>
+    <ClCompile Include="..\Source\MZLineSorter.cpp">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MZParseTime.cpp">
+      <Filter>SUT_MCLineSorter\MZLineSorter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
