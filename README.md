@@ -1,3 +1,4 @@
+
 # MZLineSorter
 C++ Class for sorting lines in a file or buffer
 
@@ -14,3 +15,11 @@ This class is depended on the follwing other repositories
 - MZMisc
 
 Clone them and place them parallell to this project
+
+
+# History
+
+v1.2 - 2019-12-05<br/>
+    First Public version
+    
+   
