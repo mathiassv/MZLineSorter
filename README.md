@@ -9,6 +9,8 @@ Can remove blackinks, skip whitepace and more.<br/>
 
 Demo app include a commandline tool that support all of this
 
+This class is used in the SortLines feature in [MultiCommander](http://multicommander.com)
+
 # Dependency
 This class is depended on the follwing other repositories
 - MZDataReader
