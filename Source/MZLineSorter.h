@@ -41,20 +41,20 @@ namespace MZLineSorter
   class MZLineSortingOptions
   {
   public:
-    DWORD StartLine;
-    DWORD EndLine;
+    DWORD StartLine = 0;
+    DWORD EndLine = 0;
 
-    DWORD LineOffset;   // 0-Based
-    DWORD SubStringLen; // Substring to match has fixed len
+    DWORD LineOffset = 0;   // 0-Based
+    DWORD SubStringLen = 0; // Substring to match has fixed len
     
-    wchar_t charMatchW; // ItemSeparator (LineItemMatch) or EndChar (Substring match)
-    char    charMatchA;
+    wchar_t charMatchW = 0; // ItemSeparator (LineItemMatch) or EndChar (Substring match)
+    char    charMatchA = 0;
 
     char    szMatch[128];
 
     SortOption options;
     
-    DWORD LineItem;
+    DWORD LineItem = 0;
 
     char    GetMatchChar(char) const    { return charMatchA; }
     wchar_t GetMatchChar(wchar_t) const { return charMatchW; }
@@ -82,7 +82,7 @@ namespace MZLineSorter
       ZeroMemory(this, sizeof(MZLineSortingOptions));
     }
 
-    DWORD GetSortAs()
+    DWORD GetSortAs() const
     {
       if (options & MZLineSorter::Option_SortAsText)
         return MZLineSorter::Option_SortAsText;
@@ -94,7 +94,7 @@ namespace MZLineSorter
       return MZLineSorter::Option_SortAsText;
     }
 
-    DWORD GetSortBy()
+    DWORD GetSortBy() const
     {
       if (options & MZLineSorter::Option_SortByEntireLine)
         return MZLineSorter::Option_SortByEntireLine;
@@ -105,14 +105,16 @@ namespace MZLineSorter
 
       return MZLineSorter::Option_SortByEntireLine;
     }
-    DWORD GetSortOrder()
+
+    DWORD GetSortOrder() const
     {
       if (options & MZLineSorter::Option_Reverse)
         return MZLineSorter::Option_Reverse;
 
       return 0;
     }
-    DWORD GetSaveAs()
+
+    DWORD GetSaveAs() const
     {
       if (options & MZLineSorter::Option_Save_NewName)
         return MZLineSorter::Option_Save_NewName;
@@ -140,7 +142,7 @@ namespace MZLineSorter
     DWORD SortLinesInBuffert(wchar_t* szText, DWORD dwLen, const MZLineSortingOptions& options);
 
     std::string ErrorMessage() { return m_errorMessage; }
-    DWORD ErrorCode() { return m_errorCode; }
+    DWORD ErrorCode() const { return m_errorCode; }
   protected:
     
     std::string m_errorMessage;

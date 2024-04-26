@@ -3,7 +3,7 @@ namespace MZLineSorter
 {
   struct MCLineSorterException : std::exception
   {
-    MCLineSorterException(DWORD dwError, const char* szText)
+    MCLineSorterException(const DWORD dwError, const char* szText)
       : std::exception(szText)
     {
       errorCode = dwError;

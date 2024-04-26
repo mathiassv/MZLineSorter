@@ -24,7 +24,7 @@ void MZSortFiles::Sort(const std::vector<STLString>& vFiles, const STLString& ou
   }
 }
 
-bool MZSortFiles::SortFile(const STLString& input, const STLString& outFile, MZLineSorter::MZLineSortingOptions& sortOptions, bool bVerbose)
+bool MZSortFiles::SortFile(const STLString& input, const STLString& outFile, const MZLineSorter::MZLineSortingOptions& sortOptions, bool bVerbose)
 {
   USES_CONVERSION;
   MZLineSorter::LineSorter lineSorter;
@@ -34,9 +34,8 @@ bool MZSortFiles::SortFile(const STLString& input, const STLString& outFile, MZL
 
   if (lineSorter.SortLines(input, outFile, sortOptions) != ERROR_SUCCESS)
   {
-
-    auto message = lineSorter.ErrorMessage();
-    DWORD dwErrorCode = lineSorter.ErrorCode();
+    const auto message = lineSorter.ErrorMessage();
+    const DWORD dwErrorCode = lineSorter.ErrorCode();
     if (dwErrorCode == ERROR_FILE_EXISTS)
     {
       OutputLineFmt(_T("Sorting failed. File already exists : \"%s\" (%S)"), outFile.c_str(), message.c_str());
@@ -44,7 +43,7 @@ bool MZSortFiles::SortFile(const STLString& input, const STLString& outFile, MZL
     }
     else
     {
-      STLString str = A2CT(lineSorter.ErrorMessage().c_str());
+      const STLString str = A2CT(lineSorter.ErrorMessage().c_str());
       OutputLineFmt(_T("Sorting failed. %s"), str.c_str());
       return false;
     }

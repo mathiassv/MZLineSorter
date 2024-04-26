@@ -49,12 +49,12 @@ namespace MZLineSorter
       if (options.options & MZLineSorter::Option_SortAsNum)
       {
         // Sort as NUM
-          std::stable_sort(begin(m_vItems) + options.StartLine, end(m_vItems) - options.EndLine, [](const LineInfo& item1, const LineInfo& item2) noexcept { return item1.nValue < item2.nValue; });
+          std::stable_sort(begin(m_vItems) + options.StartLine, end(m_vItems) - options.EndLine, [](const LineInfo& item1, const LineInfo& item2) { return item1.nValue < item2.nValue; });
       }
       else if (options.options & MZLineSorter::Option_SortAsDate)
       {
         // Sort as Date
-          std::stable_sort(begin(m_vItems) + options.StartLine, end(m_vItems) - options.EndLine, [](const LineInfo& item1, const LineInfo& item2) noexcept { return item1.nTime < item2.nTime; });
+          std::stable_sort(begin(m_vItems) + options.StartLine, end(m_vItems) - options.EndLine, [](const LineInfo& item1, const LineInfo& item2) { return item1.nTime < item2.nTime; });
       }
       else if (options.options & MZLineSorter::Option_LanguageAware)
       {

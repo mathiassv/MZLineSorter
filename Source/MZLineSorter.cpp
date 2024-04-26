@@ -61,6 +61,45 @@ namespace
     return vLineData;
   }
 
+  std::string GetNewLineA(MZDR::NewLine newLineStyle)
+  {
+    std::string newLine;
+
+    if (newLineStyle == MZDR::CR)
+      newLine = "\r";
+    if (newLineStyle == MZDR::LF)
+      newLine = "\n";
+    if (newLineStyle == MZDR::CRLF)
+      newLine = "\r\n";
+
+    return newLine;
+  }
+
+  std::wstring GetNewLineW(MZDR::NewLine newLineStyle)
+  {
+    std::wstring newLine;
+
+    if (newLineStyle == MZDR::CR)
+      newLine = L"\r";
+    if (newLineStyle == MZDR::LF)
+      newLine = L"\n";
+    if (newLineStyle == MZDR::CRLF)
+      newLine = L"\r\n";
+
+    return newLine;
+  }
+
+
+  std::string GetNewLine(char, MZDR::NewLine newLineStyle)
+  {
+    return GetNewLineA(newLineStyle);
+  }
+
+  std::wstring GetNewLine(wchar_t, MZDR::NewLine newLineStyle)
+  {
+    return GetNewLineW(newLineStyle);
+  }
+
   template<typename T>
   void SortLinesInFiles(const STLString& filename, const STLString& targetFilename, const MZLineSortingOptions& options)
   {
@@ -117,44 +156,6 @@ namespace
     }
   }
 
-  std::string GetNewLineA(MZDR::NewLine newLineStyle)
-  {
-    std::string newLine;
-
-    if (newLineStyle == MZDR::CR)
-      newLine = "\r";
-    if (newLineStyle == MZDR::LF)
-      newLine = "\n";
-    if (newLineStyle == MZDR::CRLF)
-      newLine = "\r\n";
-
-    return newLine;
-  }
-
-  std::wstring GetNewLineW(MZDR::NewLine newLineStyle)
-  {
-    std::wstring newLine;
-
-    if (newLineStyle == MZDR::CR)
-      newLine = L"\r";
-    if (newLineStyle == MZDR::LF)
-      newLine = L"\n";
-    if (newLineStyle == MZDR::CRLF)
-      newLine = L"\r\n";
-
-    return newLine;
-  }
-
-
-  std::string GetNewLine(char, MZDR::NewLine newLineStyle)
-  {
-    return GetNewLineA(newLineStyle);
-  }
-
-  std::wstring GetNewLine(wchar_t, MZDR::NewLine newLineStyle)
-  {
-    return GetNewLineW(newLineStyle);
-  }
   void CopyLinesToBuffer(const std::vector<LineInfo>& vLines, BYTE* buff, DWORD dwBuffLen, const BYTE* newLine, DWORD newLineLen)
   {
 
@@ -217,12 +218,12 @@ std::vector<std::wstring> LineSorter::GetSampleLines(const STLString& filename, 
   try
   {
     auto format = DataIdentifier::GetContentFormat(filename);
-    if (format == ContentAscii)
+    if (format == ContentFormat::ContentAscii)
     {
       LineReaderA reader;
       FileDataReader dataReader(filename);
       LineParser lineParser;
-      auto pLineData = reader.ReadLinesFromDataReader(&dataReader, &lineParser);
+      const auto pLineData = reader.ReadLinesFromDataReader(&dataReader, &lineParser);
 
       std::string text;
       const auto& vLines = pLineData->GetLines();
@@ -261,11 +262,11 @@ DWORD LineSorter::SortLines(const STLString& filename, const STLString& targetFi
   {
     ContentFormat format = DataIdentifier::GetContentFormat(filename);
 
-    if (format == ContentAscii)
+    if (format == ContentFormat::ContentAscii)
     {
       SortLinesInFiles<char>(filename, targetFilename, options);
     }
-    else if (format == ContentUnicode)
+    else if (format == ContentFormat::ContentUnicode)
     {
       SortLinesInFiles<wchar_t>(filename, targetFilename, options);
     }
